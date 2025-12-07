@@ -1,11 +1,11 @@
-server:
-  shutdown: graceful
-
 spring:
   application:
     name: coordinator-service
   lifecycle:
     timeout-per-shutdown-phase: 30s
+
+server:
+  shutdown: graceful
 
 management:
   endpoints:
@@ -13,10 +13,14 @@ management:
       exposure:
         include: health,info,prometheus
 
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:50060}
+
 coordinator:
   storage:
-    path: ./data/metadata.json
+    path: ${COORDINATOR_STORAGE_PATH:/app/data/metadata.json}
   cleanup:
-    interval-ms: 60000
-    timeout-ms: 600000
-  chunk-size: 1048576
+    interval-ms: ${COORDINATOR_CLEANUP_INTERVAL_MS:60000}
+    timeout-ms: ${COORDINATOR_CLEANUP_TIMEOUT_MS:600000}
+  chunk-size: ${COORDINATOR_CHUNK_SIZE:1048576}

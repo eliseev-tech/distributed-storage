@@ -9,6 +9,6 @@ public class CoordinatorClientProperties {
 
     private String host;
     private int port;
-    private String advertisedHost = "datanode";
+    private String advertisedHost;
 
 }

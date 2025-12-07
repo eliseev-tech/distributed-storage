@@ -1,18 +1,23 @@
-server:
-  shutdown: graceful
-
 spring:
   application:
     name: datanode-service
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
+server:
+  shutdown: graceful
+
+grpc:
+  server:
+    port: ${GRPC_SERVER_PORT:50051}
+
 datanode:
   storage:
-    path: ./data
+    path: ${DATANODE_STORAGE_PATH:/app/data}
   grpc:
-    port: 50051
+    port: ${GRPC_SERVER_PORT:50051}
 
 coordinator:
-  host: coordinator
-  port: 50060
+  host: ${COORDINATOR_HOST:coordinator}
+  port: ${COORDINATOR_PORT:50060}
+  advertised-host: ${DATANODE_ADVERTISED_HOST:localhost}
