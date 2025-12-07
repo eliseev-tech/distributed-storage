@@ -14,9 +14,6 @@
         <module>coordinator-service</module>
         <module>datanode-service</module>
         <module>client-cli</module>
-        <module>coordinator-service</module>
-        <module>datanode-service</module>
-        <module>client-cli</module>
     </modules>
 
     <properties>
