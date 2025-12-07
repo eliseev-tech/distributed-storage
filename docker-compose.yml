@@ -31,6 +31,7 @@ services:
       DATANODE_STORAGE_PATH: /app/data
       COORDINATOR_HOST: coordinator
       COORDINATOR_PORT: 50060
+      DATANODE_ADVERTISED_HOST: datanode1
     volumes:
       - datanode1-data:/app/data
     ports:
@@ -56,6 +57,7 @@ services:
       DATANODE_STORAGE_PATH: /app/data
       COORDINATOR_HOST: coordinator
       COORDINATOR_PORT: 50060
+      DATANODE_ADVERTISED_HOST: datanode2
     volumes:
       - datanode2-data:/app/data
     ports:
