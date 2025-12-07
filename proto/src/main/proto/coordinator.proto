@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package storage.coordinator;
+
+option java_multiple_files = true;
+option java_package = "ru.eliseevtech.storage.coordinator.proto";
+
+service CoordinatorService {
+  rpc InitiateUpload(InitiateUploadRequest) returns (InitiateUploadResponse);
+  rpc FinalizeUpload(FinalizeUploadRequest) returns (FinalizeUploadResponse);
+  rpc InitiateDownload(InitiateDownloadRequest) returns (InitiateDownloadResponse);
+  rpc GetUploadStatus(GetUploadStatusRequest) returns (GetUploadStatusResponse);
+}
+
+service DataNodeRegistryService {
+  rpc RegisterDataNode(RegisterDataNodeRequest) returns (RegisterDataNodeResponse);
+  rpc UnregisterDataNode(UnregisterDataNodeRequest) returns (UnregisterDataNodeResponse);
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+}
+
+message InitiateUploadRequest {
+  string file_path = 1;
+  int64 file_size = 2;
+  bool resume = 3;
+}
+
+message InitiateUploadResponse {
+  string upload_id = 1;
+  string data_node_address = 2;
+  int32 chunk_size = 3;
+  bool resumed = 4;
+  int32 last_chunk_index = 5;
+  int64 bytes_uploaded = 6;
+}
+
+message FinalizeUploadRequest {
+  string upload_id = 1;
+  string file_path = 2;
+}
+
+message FinalizeUploadResponse {
+  bool success = 1;
+  string error_message = 2;
+}
+
+message InitiateDownloadRequest {
+  string file_path = 1;
+}
+
+message InitiateDownloadResponse {
+  string upload_id = 1;
+  string data_node_address = 2;
+  int64 file_size = 3;
+  int32 chunk_size = 4;
+}
+
+message GetUploadStatusRequest {
+  string upload_id = 1;
+}
+
+message GetUploadStatusResponse {
+  string upload_id = 1;
+  string status = 2;
+  int64 bytes_uploaded = 3;
+  int32 last_chunk_index = 4;
+}
+
+message RegisterDataNodeRequest {
+  string host = 1;
+  int32 port = 2;
+}
+
+message RegisterDataNodeResponse {
+  string node_id = 1;
+}
+
+message UnregisterDataNodeRequest {
+  string node_id = 1;
+}
+
+message UnregisterDataNodeResponse {
+}
+
+message HeartbeatRequest {
+  string node_id = 1;
+}
+
+message HeartbeatResponse {
+  bool known = 1;
+}

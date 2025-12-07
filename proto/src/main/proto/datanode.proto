@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package storage.datanode;
+
+option java_multiple_files = true;
+option java_package = "ru.eliseevtech.storage.datanode.proto";
+
+service DataNodeService {
+  rpc UploadFileStream(stream UploadChunk) returns (UploadResponse);
+  rpc DownloadFileStream(DownloadRequest) returns (stream DownloadChunk);
+}
+
+service DataNodeControlService {
+  rpc DeleteUpload(DeleteUploadRequest) returns (DeleteUploadResponse);
+  rpc GetUploadStats(GetUploadStatsRequest) returns (GetUploadStatsResponse);
+}
+
+message UploadChunk {
+  string upload_id = 1;
+  int32 chunk_index = 2;
+  bytes data = 3;
+}
+
+message UploadResponse {
+  string upload_id = 1;
+  int32 uploaded_chunks = 2;
+  int64 uploaded_bytes = 3;
+  bool success = 4;
+  string error_message = 5;
+}
+
+message DownloadRequest {
+  string upload_id = 1;
+}
+
+message DownloadChunk {
+  int32 chunk_index = 1;
+  bytes data = 2;
+  bool is_last = 3;
+}
+
+message DeleteUploadRequest {
+  string upload_id = 1;
+}
+
+message DeleteUploadResponse {
+  bool success = 1;
+}
+
+message GetUploadStatsRequest {
+  string upload_id = 1;
+}
+
+message GetUploadStatsResponse {
+  string upload_id = 1;
+  int32 chunks_count = 2;
+  int64 bytes_written = 3;
+}
