@@ -16,7 +16,7 @@
         <dependency>
             <groupId>ru.eliseevtech</groupId>
             <artifactId>distributed-storage-proto</artifactId>
-            <version>1.0.0</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>

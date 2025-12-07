@@ -1,0 +1,22 @@
+server:
+  shutdown: graceful
+
+spring:
+  application:
+    name: coordinator-service
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+coordinator:
+  storage:
+    path: ./data/metadata.json
+  cleanup:
+    interval-ms: 60000
+    timeout-ms: 600000
+  chunk-size: 1048576
